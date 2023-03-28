@@ -15,7 +15,8 @@ class VideoCard extends StatefulWidget {
   State<VideoCard> createState() => _VideoCardState();
 }
 
-class _VideoCardState extends State<VideoCard> {
+class _VideoCardState extends State<VideoCard>
+    with AutomaticKeepAliveClientMixin<VideoCard> {
   late VideoPlayerController _videoPlayerController;
   bool isMuted = false;
   bool isPlay = false;
@@ -128,4 +129,7 @@ class _VideoCardState extends State<VideoCard> {
       },
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
