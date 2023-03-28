@@ -33,21 +33,22 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void getPosition() {
-    for (int i = 0; i < videoData.length; i++) {
-      if (_key[i].currentContext != null) {
-        RenderBox box = _key[i].currentContext!.findRenderObject() as RenderBox;
-        Offset position =
-            box.localToGlobal(Offset.zero); //this is global position
-        double y = position.dy;
-        String cardPosition = i == 0
-            ? 'left'
-            : i % 2 == 0
-                ? 'left'
-                : 'right';
-        context
-            .read<VideoCubit>()
-            .setAutoPlay(y, cardPosition, videoData[i].id, i);
-      }
+    int index = videoData.indexWhere((value) => value.isPlay == true);
+    if (_key[index].currentContext != null) {
+      RenderBox box =
+          _key[index].currentContext!.findRenderObject() as RenderBox;
+      Offset position =
+          box.localToGlobal(Offset.zero); //this is global position
+      double y = position.dy;
+      log('card position $index = $y');
+      bool isEven = index == 0
+          ? true
+          : index % 2 == 0
+              ? true
+              : false;
+      context
+          .read<VideoCubit>()
+          .setAutoPlay(y, isEven, videoData[index].id, index);
     }
   }
 

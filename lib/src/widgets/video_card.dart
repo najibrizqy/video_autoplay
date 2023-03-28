@@ -57,16 +57,18 @@ class _VideoCardState extends State<VideoCard> {
     return BlocConsumer<VideoCubit, VideoState>(
       listener: ((context, state) {
         if (state is VideoSuccess) {
-          for (int i = 0; i < state.video.length; i++) {
-            if (widget.video.id == state.video[i].id) {
-              if (state.video[i].isPlay) {
-                _videoPlayerController.play();
-                isPlay = true;
-              } else {
-                _videoPlayerController.pause();
-                isPlay = false;
-              }
+          int index = state.video.indexWhere((value) => value.isPlay == true);
+          if (widget.video.id == state.video[index].id) {
+            if (state.video[index].isPlay) {
+              _videoPlayerController.play();
+              isPlay = true;
+            } else {
+              _videoPlayerController.pause();
+              isPlay = false;
             }
+          } else {
+            _videoPlayerController.pause();
+            isPlay = false;
           }
         }
       }),

@@ -30,21 +30,25 @@ class VideoCubit extends Cubit<VideoState> {
   }
 
   Future<void> setAutoPlay(
-      double position, String cardPosition, String id, int index) async {
+      double position, bool isEven, String id, int index) async {
     emit(VideoLoading());
     video.map((e) {
       if (e.id == id) {
-        if (cardPosition == 'right') {
-          if (position < 75.0 && position > 5.0) {
-            e.isPlay = true;
-          } else {
+        if (isEven) {
+          if (position > -30 && position < 72) {
             e.isPlay = false;
+            video[index + 1].isPlay = true;
+          } else if (position > 216) {
+            e.isPlay = false;
+            video[index - 1].isPlay = true;
           }
         } else {
-          if (position > 75 && position < 255) {
-            e.isPlay = true;
-          } else {
+          if (position < -30) {
             e.isPlay = false;
+            video[index + 1].isPlay = true;
+          } else if (position > 72) {
+            e.isPlay = false;
+            video[index - 1].isPlay = true;
           }
         }
       }
